@@ -40,7 +40,7 @@
 <ul>
 <li>1.前端代码经过生产/开发编译打包后存放到对应路径/内存硬盘中</li>
 <li>2.服务端读取打包文件，调用前端提供的渲染方法(比如react提供的<code>renderToString</code>)渲染成字符串，然后进行注水等操作，同时把打包后的文件挂载到模版上</li>
-<li>3.最后把注水完成的模版字符串通过<code>res.end</code>返回，返回后就是服务端选的效果</li>
+<li>3.最后把注水完成的模版字符串通过<code>res.end</code>返回，返回后就是服务端渲染的效果</li>
 </ul>
 <p>所以，<code>app.getRequestHandler</code>是<code>next</code>一个专门的回调函数，这个函数意义就是通过浏览器请求路由去读取对应的打包文件，然后渲染对应的模版字符串，最后返回<code>res.end(html)</code>完成同构渲染</p>
-<h2 id="未完待续"><a href="#未完待续" class="headerlink" title="未完待续"></a>未完待续</h2></div></article></div></main><footer><div class="paginator"><a href="/2020/01/07/3/" class="next">NEXT</a></div><div class="copyright"><p>© 2015 - 2020 <a href="http://yoursite.com">biaodigit</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>
+<h2 id="未完待续"><a href="#未完待续" class="headerlink" title="未完待续"></a>未完待续</h2></div></article></div></main><footer><div class="paginator"><a href="/2020/01/07/3/" class="next">下一篇</a></div><div class="copyright"><p>© 2015 - 2020 <a href="http://yoursite.com">biaodigit</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>
