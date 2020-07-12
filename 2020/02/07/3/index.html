@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Next.js+Egg.js配置 · 罗文迪的博客</title><meta name="description" content="Next.js+Egg.js配置 - biaodigit"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://yoursite.com/atom.xml" title="罗文迪的博客"><link rel="alternate" href="/atom.xml" title="罗文迪的博客" type="application/atom+xml">
-</head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/biaodigit" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="https://biaodigit.github.io/LeetCode/" target="_blank" class="nav-list-link">LEETCODE</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">Next.js+Egg.js配置</h1><div class="post-info">2020年1月7日</div><div class="post-content"><h2 id="Next-js简介"><a href="#Next-js简介" class="headerlink" title="Next.js简介"></a>Next.js简介</h2><p>Next.js作为<a href="https://reactjs.org/docs/create-a-new-react-app.html#nextjs" target="_blank" rel="noopener">React官方钦定</a>的轻量级同构框架，有以下几个特性：</p>
+</head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/biaodigit" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="https://biaodigit.github.io/LeetCode/" target="_blank" class="nav-list-link">LEETCODE</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">Next.js+Egg.js配置</h1><div class="post-info">2020年2月7日</div><div class="post-content"><h2 id="Next-js简介"><a href="#Next-js简介" class="headerlink" title="Next.js简介"></a>Next.js简介</h2><p>Next.js作为<a href="https://reactjs.org/docs/create-a-new-react-app.html#nextjs" target="_blank" rel="noopener">React官方钦定</a>的轻量级同构框架，有以下几个特性：</p>
 <ul>
 <li>开箱即用，支持0配置开发</li>
 <li>支持约定式路由</li>
@@ -22,15 +22,15 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">app.prepare().then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  createServer(<span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
 <p>2.当前期的实例和方法都准备好以后，下一步就是启动服务了，启动http服务之前先跑了一次<code>app.prepare</code>，而这个<code>app.prepare</code>是干什么用的呢，在这里可以先不急着去看prepare的源码，可以先去看看next官方脚手架是怎么跑起来的。</p>
-<p>官方给出的命令配置如下：<br><img src="/2020/01/07/3/01.png" alt="01.png"><br>以<code>dev</code>为例，可以从next源码中找到对应的<code>cli/next-dev.ts</code>文件</p>
+<p>官方给出的命令配置如下：<br><img src="/2020/02/07/3/01.png" alt="01.png"><br>以<code>dev</code>为例，可以从next源码中找到对应的<code>cli/next-dev.ts</code>文件</p>
 <blockquote>
 <p>next-dev.ts</p>
 </blockquote>
-<p><img src="/2020/01/07/3/02.png" alt="02.png"><br>可以看到在<code>dev</code>启动命令同样调用了<code>app.prepare</code>这个方法，而前面那个<code>startServer</code>又是个什么东西，可以根据路径找到对应文件</p>
+<p><img src="/2020/02/07/3/02.png" alt="02.png"><br>可以看到在<code>dev</code>启动命令同样调用了<code>app.prepare</code>这个方法，而前面那个<code>startServer</code>又是个什么东西，可以根据路径找到对应文件</p>
 <blockquote>
 <p>start-server.ts</p>
 </blockquote>
-<p><img src="/2020/01/07/3/03.png" alt="03.png"></p>
+<p><img src="/2020/02/07/3/03.png" alt="03.png"></p>
 <p>看到这里就大概知道官方启动next的流程是先启动一个http服务，启动完后再去调用<code>app.prepare</code>方法，除了<code>dev</code>生产模式下的<code>start</code>也是同样流程，所以这个时候prepare内部是干什么的已经不需要去知道，源码怎么做这边自定义启动next就怎么做</p>
 <p>至于是先创建http服务还是先跑<code>app.prepare</code>方法也不重要，只要在开始做路由匹配前都启动完成即可</p>
 <h2 id="Egg-js自定义配置"><a href="#Egg-js自定义配置" class="headerlink" title="Egg.js自定义配置"></a>Egg.js自定义配置</h2><p>Egg.js自定义配置较简单，只需要在根目录新建一个<code>app.ts</code>，调用<code>beforeStart</code>即可</p>
@@ -99,4 +99,4 @@
 
 <p>看到这里看官们应该会有一个疑问🤔️，为什么egg的自定义配置用的是<code>common.js</code>规范而不是<code>esmodule</code>规范，在我的<a href="https://biaodigit.github.io/2020/01/07/2/" target="_blank" rel="noopener">Next.js使用总结</a>文章中有总结原因，在这里就不再赘述，欢迎各位看官去看一看，说不定还有一些你现在使用Next.js的一些疑难杂症（手动斜眼。</p>
 <p>至此Next.js+Egg.js配置已基本结束，楼主还是会一直持续关注Next.js的变化，顺便写一些Next.js源码解析文章，毕竟工欲善其事必先利其器，灵活运用一个框架了解其原理是必不可少的，所以敬请期待🎉🎉🎉</p>
-</div></article></div></main><footer><div class="paginator"><a href="/2020/01/18/4/" class="prev">PREV</a><a href="/2020/01/07/2/" class="next">NEXT</a></div><div class="copyright"><p>© 2015 - 2020 <a href="http://yoursite.com">biaodigit</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>
+</div></article></div></main><footer><div class="paginator"><a href="/2020/04/18/4/" class="prev">PREV</a><a href="/2020/01/07/2/" class="next">NEXT</a></div><div class="copyright"><p>© 2015 - 2020 <a href="http://yoursite.com">biaodigit</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>
